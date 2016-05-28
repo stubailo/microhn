@@ -1,6 +1,4 @@
 <script>
-const url = 'https://www.graphqlhub.com/graphql';
-
 const kidsTemplate = (kids) => `
   <ul>
     ${kids.map(kid => `
@@ -30,6 +28,9 @@ const pages = {
           <li><a href="#${story.id}">${story.title}</a></li>
         `).join('')}
       </ol>
+      <a href="https://github.com/stubailo/microhn">
+        Contribute to microhn on GitHub
+      </a>
     `
   },
   story: {
@@ -85,7 +86,7 @@ window.addEventListener('hashchange', route);
 window.addEventListener('load', route);
 
 function get(query) {
-  return fetch(url + '?query=' + encodeURIComponent(query)).then((result) => {
+  return fetch('https://www.graphqlhub.com/graphql?query=' + encodeURIComponent(query)).then((result) => {
     return result.json();
   }).then((graphQLResult) => {
     if (!graphQLResult.errors) {
@@ -95,5 +96,4 @@ function get(query) {
     }
   });
 }
-
 </script>
