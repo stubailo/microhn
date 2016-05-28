@@ -1,0 +1,99 @@
+<script>
+const url = 'https://www.graphqlhub.com/graphql';
+
+const kidsTemplate = (kids) => `
+  <ul>
+    ${kids.map(kid => `
+      <li>
+        ${kid.by.id}: ${kid.text}
+        ${kid.kids && kidsTemplate(kid.kids)}
+      </li>
+    `).join('')}
+  </ul>
+`;
+
+const pages = {
+  feed: {
+    query: (params) => `
+      {
+        hn {
+          topStories {
+            title
+            id
+          }
+        }
+      }
+    `,
+    template: (data) => `
+      <ol>
+        ${data.hn.topStories.map((story) => `
+          <li><a href="#${story.id}">${story.title}</a></li>
+        `).join('')}
+      </ol>
+    `
+  },
+  story: {
+    query: (params) => `
+      {
+        hn {
+         	item(id: ${params.id}) {
+            title
+            url
+            kids {
+              text
+              by {
+                id
+              }
+              kids {
+                text
+                by {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+    template: (data) => `
+      <a href="#">Home</a>
+      <h1>
+        <a href="${data.hn.item.url}">
+          ${data.hn.item.title}
+        </a>
+      </h1>
+      ${kidsTemplate(data.hn.item.kids)}
+    `
+  }
+};
+
+function route(event) {
+  if (window.location.hash) {
+    render('story', { id: window.location.hash.substr(1) });
+  } else {
+    render('feed');
+  }
+}
+
+function render(name, params) {
+  get(pages[name].query(params)).then((data) => {
+    document.body.innerHTML = pages[name].template(data);
+  });
+}
+
+window.addEventListener('hashchange', route);
+window.addEventListener('load', route);
+
+function get(query) {
+  return fetch(url + '?query=' + encodeURIComponent(query)).then((result) => {
+    return result.json();
+  }).then((graphQLResult) => {
+    if (!graphQLResult.errors) {
+      return graphQLResult.data;
+    } else {
+      throw new Error(graphQLResult.errors[0].message);
+    }
+  });
+}
+
+</script>
