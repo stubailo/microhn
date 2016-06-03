@@ -77,7 +77,7 @@ function route(event) {
 }
 
 function render(name, params) {
-  get(pages[name].query(params)).then((data) => {
+  get(pages[name].query(params), ({ data }) => {
     document.body.innerHTML = pages[name].template(data);
   });
 }
@@ -85,15 +85,13 @@ function render(name, params) {
 window.addEventListener('hashchange', route);
 window.addEventListener('load', route);
 
-function get(query) {
-  return fetch('https://www.graphqlhub.com/graphql?query=' + encodeURIComponent(query))
-    .then((result) => result.json())
-    .then((graphQLResult) => {
-      if (!graphQLResult.errors) {
-        return graphQLResult.data;
-      } else {
-        throw new Error(graphQLResult.errors[0].message);
-      }
-    });
+function get(query, cb) {
+  const xhr = new XMLHttpRequest(); // XHR instead of fetch for Edge, IE, Safari
+  xhr.open("get", 'https://www.graphqlhub.com/graphql?query=' + encodeURIComponent(query), true);
+  xhr.responseType = "json";
+  xhr.onload = () => {
+    cb(xhr.response);
+  };
+  xhr.send();
 }
 </script>
