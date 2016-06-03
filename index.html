@@ -4,7 +4,7 @@ const kidsTemplate = (kids) => `
     ${kids.map(kid => `
       <li>
         ${kid.by.id}: ${kid.text}
-        ${kid.kids && kidsTemplate(kid.kids)}
+        ${kid.kids ? kidsTemplate(kid.kids) : ''}
       </li>
     `).join('')}
   </ul>
