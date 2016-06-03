@@ -89,9 +89,7 @@ function get(query, cb) {
   const xhr = new XMLHttpRequest(); // XHR instead of fetch for Edge, IE, Safari
   xhr.open("get", 'https://www.graphqlhub.com/graphql?query=' + encodeURIComponent(query), true);
   xhr.responseType = "json";
-  xhr.onload = () => {
-    cb(xhr.response);
-  };
+  xhr.onload = () => cb(xhr.response);
   xhr.send();
 }
 </script>
