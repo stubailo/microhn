@@ -86,14 +86,14 @@ window.addEventListener('hashchange', route);
 window.addEventListener('load', route);
 
 function get(query) {
-  return fetch('https://www.graphqlhub.com/graphql?query=' + encodeURIComponent(query)).then((result) => {
-    return result.json();
-  }).then((graphQLResult) => {
-    if (!graphQLResult.errors) {
-      return graphQLResult.data;
-    } else {
-      throw new Error(graphQLResult.errors[0].message);
-    }
-  });
+  return fetch('https://www.graphqlhub.com/graphql?query=' + encodeURIComponent(query))
+    .then((result) => result.json())
+    .then((graphQLResult) => {
+      if (!graphQLResult.errors) {
+        return graphQLResult.data;
+      } else {
+        throw new Error(graphQLResult.errors[0].message);
+      }
+    });
 }
 </script>
