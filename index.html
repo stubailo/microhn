@@ -1,9 +1,9 @@
 <script>
 const kidsTemplate = (kids) => `
-  <ul>
+  <ul style="padding-bottom: 20px">
     ${kids.map(kid => `
       <li>
-        ${kid.by.id}: ${kid.text}
+        <p><b>${kid.by.id}</b>: ${kid.text}</p>
         ${kid.kids ? kidsTemplate(kid.kids) : ''}
       </li>
     `).join('')}
@@ -23,6 +23,7 @@ const pages = {
       }
     `,
     template: (data) => `
+      <p>Hacker News front page</p>
       <ol>
         ${data.hn.topStories.map((story) => `
           <li><a href="#${story.id}">${story.title}</a></li>
@@ -53,7 +54,7 @@ const pages = {
       }
     `,
     template: (data) => `
-      <a href="#">Home</a>
+      <a href="#"><- Front page</a>
       <h1>
         <a href="${data.hn.item.url}">
           ${data.hn.item.title}
