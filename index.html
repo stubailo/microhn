@@ -73,6 +73,7 @@ function route(event) {
 }
 
 function render(name, params) {
+  document.body.innerHTML = `<p>Loading...</p>`;
   get(pages[name].query(params), ({ data }) => {
     document.body.innerHTML = pages[name].template(data);
   });
