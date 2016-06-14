@@ -10,11 +10,11 @@ Note: not all browsers are currently supported due to use of `fetch` and templat
 
 ### Browser support
 
-Because this doesn't use any frameworks or transpilers, we don't get any browser compatibility for free.
+We use the Babel in-browser transpiler to get modern JavaScript in outdated browsers.
 
 - [x] Chrome
 - [x] Firefox
-- [ ] Safari (doesn't support arrow functions)
+- [x] Safari
 
 Unknown (please submit a PR with status update):
 
