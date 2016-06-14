@@ -1,4 +1,7 @@
-<script>
+<!-- babel transpilation included for Safari/IE compat. I couldn't bring myself
+to rewrite this without template literals and arrow functions. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+<script type="text/babel">
 const kidsTemplate = (kids) => `
   <ul style="padding-bottom: 20px">
     ${kids.map(kid => `
